@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bikat Tilahun | Full-Stack Developer</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS (CDN for development/demo purposes) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            900: '#1e3a8a',
+                            950: '#172554',
+                        },
+                        darkbase: '#030712', /* slate-950 */
+                        darkcard: 'rgba(30, 41, 59, 0.4)', /* slate-800 with opacity */
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body
+    class="bg-white dark:bg-darkbase text-slate-600 dark:text-slate-300 font-sans antialiased overflow-x-hidden relative selection:bg-brand-500 selection:text-white dark:selection:text-white min-h-screen">
+
+    <!-- Ambient Background -->
+    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div
+            class="absolute top-0 left-1/4 w-96 h-96 bg-brand-600/20 rounded-full mix-blend-screen filter blur-[100px] animate-blob">
+        </div>
+        <div
+            class="absolute top-1/4 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full mix-blend-screen filter blur-[100px] animate-blob animation-delay-2000">
+        </div>
+        <div
+            class="absolute bottom-1/4 left-1/3 w-96 h-96 bg-pink-600/20 rounded-full mix-blend-screen filter blur-[100px] animate-blob animation-delay-4000">
+        </div>
+        <!-- Noise Overlay -->
+        <div
+            class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')] opacity-20 hidden md:block">
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300 backdrop-blur-md bg-darkbase/80 border-b border-slate-200/50 dark:border-slate-800/50"
+        id="navbar">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold tracking-tighter text-slate-900 dark:text-white">BT<span
+                    class="text-brand-500">.</span></a>
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <a href="#about" class="hover:text-brand-600 dark:hover:text-white transition-colors">About</a>
+                <a href="#skills" class="hover:text-brand-600 dark:hover:text-white transition-colors">Skills</a>
+                <a href="#projects" class="hover:text-brand-600 dark:hover:text-white transition-colors">Projects</a>
+                <a href="#experience" class="hover:text-brand-600 dark:hover:text-white transition-colors">Experience</a>
+                <a href="#contact" class="hover:text-brand-600 dark:hover:text-white transition-colors">Contact</a>
+                
+                <!-- Desktop Theme Toggle -->
+                <button id="theme-toggle-desktop" class="text-slate-500 hover:text-brand-600 dark:text-slate-400 dark:hover:text-white transition-colors" aria-label="Toggle Dark Mode">
+                    <i class="fa-solid fa-moon dark:hidden text-lg"></i>
+                    <i class="fa-solid fa-sun hidden dark:block text-lg"></i>
+                </button>
+            </div>
+            
+            <div class="flex items-center gap-4 md:hidden">
+                <!-- Mobile Theme Toggle -->
+                <button id="theme-toggle-mobile" class="text-slate-500 hover:text-brand-600 dark:text-slate-400 dark:hover:text-white transition-colors" aria-label="Toggle Dark Mode">
+                    <i class="fa-solid fa-moon dark:hidden text-lg"></i>
+                    <i class="fa-solid fa-sun hidden dark:block text-lg"></i>
+                </button>
+                
+                <!-- Mobile Menu Toggle -->
+                <button class="text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-white" id="mobile-menu-btn">
+                    <i class="fa-solid fa-bars text-xl" id="mobile-menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Container -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-xl absolute w-full left-0 top-full flex flex-col px-6 py-6 space-y-4 filter drop-shadow-lg">
+            <a href="#about" class="mobile-link text-lg font-medium text-slate-700 dark:text-slate-300 hover:text-brand-500 dark:hover:text-white">About</a>
+            <a href="#skills" class="mobile-link text-lg font-medium text-slate-700 dark:text-slate-300 hover:text-brand-500 dark:hover:text-white">Skills</a>
+            <a href="#projects" class="mobile-link text-lg font-medium text-slate-700 dark:text-slate-300 hover:text-brand-500 dark:hover:text-white">Projects</a>
+            <a href="#experience" class="mobile-link text-lg font-medium text-slate-700 dark:text-slate-300 hover:text-brand-500 dark:hover:text-white">Experience</a>
+            <a href="#contact" class="mobile-link text-lg font-medium text-slate-700 dark:text-slate-300 hover:text-brand-500 dark:hover:text-white">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 pt-32 pb-20 flex flex-col gap-32">
+
+        <!-- 1. Hero Section -->
+        <section id="hero" class="min-h-[75vh] flex flex-col justify-center items-start pt-10 fade-up">
+            <p class="text-brand-600 dark:text-brand-400 font-mono tracking-wide mb-4 pl-1">Hi, my name is</p>
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-slate-900 dark:text-white mb-4">
+                Bikat Tilahun.
+            </h1>
+            <h2 class="text-4xl md:text-6xl font-bold tracking-tight text-slate-500 dark:text-slate-400 mb-6">
+                I build scalable applications.
+            </h2>
+            <p class="text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl mb-10 leading-relaxed">
+                I'm a <span class="text-slate-900 dark:text-white font-medium">Full-Stack Developer</span> specializing in creating
+                exceptional digital experiences. From highly interactive web interfaces to robust backend architectures.
+            </p>
+            <div class="flex flex-wrap gap-4">
+                <a href="#projects"
+                    class="group relative px-8 py-3 bg-brand-600 text-slate-900 dark:text-white font-medium rounded-lg overflow-hidden transition-all hover:bg-brand-500 hover:shadow-[0_0_20px_rgba(37,99,235,0.4)]">
+                    <span class="relative z-10 flex items-center gap-2">View My Work <i
+                            class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i></span>
+                </a>
+                <a href="#contact"
+                    class="px-8 py-3 bg-transparent border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white font-medium rounded-lg hover:border-brand-500 hover:bg-brand-900/20 transition-all">
+                    Get in Touch
+                </a>
+            </div>
+        </section>
+
+        <!-- 2. About Section -->
+        <section id="about" class="scroll-mt-24 fade-up">
+            <div class="flex items-center gap-4 mb-8">
+                <h3 class="text-3xl font-bold text-slate-900 dark:text-white"><span
+                        class="text-brand-500 font-mono text-xl mr-2">01.</span>About Me</h3>
+                <div class="h-px bg-slate-100 dark:bg-slate-800 flex-grow max-w-xs"></div>
+            </div>
+
+            <div class="grid md:grid-cols-5 gap-12 items-start">
+                <div class="md:col-span-3 text-lg space-y-4">
+                    <p>
+                        Hello! I'm a Self-motivated Full-Stack Developer with hands-on experience in designing,
+                        building, and deploying highly interactive web applications.
+                    </p>
+                    <p>
+                        Proficient in <span class="text-brand-600 dark:text-brand-400 font-medium">React, modern web frameworks, and
+                            Node.js</span> with
+                        strong database and API integration skills. I'm deeply passionate about web performance, cloud
+                        infrastructure, and creating scalable architectures.
+                    </p>
+                    <p>
+                        I hold a Bachelor of Science in Computer Science from St. Mary's University, Addis
+                        Ababa (Graduated Jan 2026), and I'm always eager to learn new technologies and apply them to
+                        challenging projects.
+                    </p>
+                </div>
+                <!-- Optional: Image placeholder or graphic -->
+                <div class="md:col-span-2 relative group hidden md:block mx-auto">
+                    <div
+                        class="absolute inset-0 bg-brand-500 rounded-lg translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-300">
+                    </div>
+                    <div
+                        class="relative bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg p-8 aspect-square flex items-center justify-center filter grayscale hover:grayscale-0 transition-all duration-300 overflow-hidden">
+                        <i
+                            class="fa-solid fa-terminal text-6xl text-brand-600 dark:text-brand-400 opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Skills Section -->
+        <section id="skills" class="scroll-mt-24 fade-up">
+            <div class="flex items-center gap-4 mb-10">
+                <h3 class="text-3xl font-bold text-slate-900 dark:text-white"><span
+                        class="text-brand-500 font-mono text-xl mr-2">02.</span>Technical Arsenal</h3>
+                <div class="h-px bg-slate-100 dark:bg-slate-800 flex-grow max-w-[200px]"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Frontend -->
+                <div
+                    class="glass-container rounded-xl p-6 hover:-translate-y-2 transition-transform duration-300 border border-slate-200/60 dark:border-slate-800/60 shadow-lg">
+                    <div class="text-brand-600 dark:text-brand-400 mb-4"><i class="fa-solid fa-laptop-code text-3xl"></i></div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Frontend</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-tag group"><i
+                                class="fa-brands fa-react mr-1 group-hover:animate-spin-slow"></i> React</span>
+                        <span class="tech-tag group"><i class="fa-brands fa-css3-alt mr-1"></i> Tailwind CSS</span>
+                    </div>
+                </div>
+
+                <!-- Mobile -->
+                <div
+                    class="glass-container rounded-xl p-6 hover:-translate-y-2 transition-transform duration-300 border border-slate-200/60 dark:border-slate-800/60 shadow-lg">
+                    <div class="text-purple-400 mb-4"><i class="fa-solid fa-mobile-screen-button text-3xl"></i></div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Mobile</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-tag group"><i class="fa-brands fa-flutter mr-1"></i> Flutter</span>
+                    </div>
+                </div>
+
+                <!-- Backend -->
+                <div
+                    class="glass-container rounded-xl p-6 hover:-translate-y-2 transition-transform duration-300 border border-slate-200/60 dark:border-slate-800/60 shadow-lg">
+                    <div class="text-emerald-400 mb-4"><i class="fa-solid fa-server text-3xl"></i></div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Backend / APIs</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-tag group"><i class="fa-brands fa-node-js mr-1"></i> Node.js</span>
+                        <span class="tech-tag group"><i class="fa-solid fa-network-wired mr-1"></i> REST APIs</span>
+                    </div>
+                </div>
+
+                <!-- Databases -->
+                <div
+                    class="glass-container rounded-xl p-6 hover:-translate-y-2 transition-transform duration-300 border border-slate-200/60 dark:border-slate-800/60 shadow-lg">
+                    <div class="text-database-color text-yellow-500 mb-4"><i class="fa-solid fa-database text-3xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Databases</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-tag group"><i class="fa-solid fa-leaf mr-1"></i> MongoDB</span>
+                        <span class="tech-tag group"><i class="fa-solid fa-database mr-1"></i> PostgreSQL</span>
+                        <span class="tech-tag group"><i class="fa-solid fa-bolt mr-1"></i> Supabase</span>
+                        <span class="tech-tag group"><i class="fa-solid fa-fire text-amber-500 mr-1"></i>
+                            Firebase</span>
+                    </div>
+                </div>
+
+                <!-- Cloud & Tools -->
+                <div
+                    class="glass-container rounded-xl p-6 hover:-translate-y-2 transition-transform duration-300 border border-slate-200/60 dark:border-slate-800/60 shadow-lg">
+                    <div class="text-cyan-400 mb-4"><i class="fa-solid fa-cloud text-3xl"></i></div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Cloud & Tools</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <!-- Added AWS S3 specifically here as requested in prompt -->
+                        <span class="tech-tag group"><i class="fa-brands fa-aws mr-1"></i> AWS S3</span>
+                        <span class="tech-tag group">
+                            <svg class="mr-1 w-[14px] h-[14px] fill-current" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M24 22.525H0l12-21.05 12 21.05z" />
+                            </svg>
+                            Vercel
+                        </span>
+                        <span class="tech-tag group"><i class="fa-brands fa-python mr-1"></i> Python</span>
+                        <span class="tech-tag group"><i class="fa-brands fa-github mr-1"></i> Git/GitHub</span>
+                        <span class="tech-tag group"><i class="fa-solid fa-cloud-arrow-up mr-1"></i> Render</span>
+                    </div>
+                </div>
+
+                <!-- Languages -->
+                <div
+                    class="glass-container rounded-xl p-6 hover:-translate-y-2 transition-transform duration-300 border border-slate-200/60 dark:border-slate-800/60 shadow-lg">
+                    <div class="text-pink-400 mb-4"><i class="fa-solid fa-language text-3xl"></i></div>
+                    <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Languages</h4>
+                    <div class="flex flex-col gap-3 mt-4">
+                        <div class="flex justify-between items-center group">
+                            <span class="text-slate-700 dark:text-slate-200 font-medium">English</span>
+                            <span
+                                class="text-xs font-mono text-brand-600 dark:text-brand-400 bg-brand-100/50 dark:bg-brand-900/30 px-2 py-1 rounded">Fluent</span>
+                        </div>
+                        <div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                            <div class="bg-brand-500 h-full w-[90%] group-hover:bg-brand-400 transition-colors"></div>
+                        </div>
+
+                        <div class="flex justify-between items-center mt-2 group">
+                            <span class="text-slate-700 dark:text-slate-200 font-medium">Amharic</span>
+                            <span
+                                class="text-xs font-mono text-brand-600 dark:text-brand-400 bg-brand-100/50 dark:bg-brand-900/30 px-2 py-1 rounded">Native</span>
+                        </div>
+                        <div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                            <div class="bg-brand-500 h-full w-full group-hover:bg-brand-400 transition-colors"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Projects Section -->
+        <section id="projects" class="scroll-mt-24 fade-up">
+            <div class="flex items-center gap-4 mb-12">
+                <h3 class="text-3xl font-bold text-slate-900 dark:text-white"><span
+                        class="text-brand-500 font-mono text-xl mr-2">03.</span>Featured Projects</h3>
+                <div class="h-px bg-slate-100 dark:bg-slate-800 flex-grow max-w-[200px]"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+
+                <!-- Project 1 -->
+                <a href="https://redharvesthoney.com/" target="_blank"
+                    class="project-card group bg-white dark:bg-slate-900 border border-slate-300/50 dark:border-slate-700/50 rounded-2xl p-5 shadow-lg flex flex-col interactive-glow hover:-translate-y-1 transition-all duration-300 block">
+                    <!-- Image container -->
+                    <div class="rounded-xl overflow-hidden mb-5 bg-slate-100 dark:bg-slate-800 aspect-[16/9] relative">
+                        <div
+                            class="absolute inset-0 bg-brand-900/10 group-hover:bg-transparent transition-colors duration-500 z-10">
+                        </div>
+                        <img src="img1.png" alt="Red Harvest Honey Preview"
+                            class="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700 ease-out">
+                    </div>
+                    <!-- Content -->
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-xl font-bold text-slate-800 dark:text-slate-100 group-hover:text-brand-400 transition-colors">
+                            Red Harvest Honey
+                        </h4>
+                        <div class="text-slate-500 dark:text-slate-400 group-hover:text-brand-600 dark:group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-arrow-up-right-from-square text-lg"></i>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span
+                            class="bg-teal-100/50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 text-xs font-medium px-3 py-1 rounded-full border border-teal-200/50 dark:border-teal-800/50">HTML5</span>
+                        <span
+                            class="bg-teal-100/50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 text-xs font-medium px-3 py-1 rounded-full border border-teal-200/50 dark:border-teal-800/50">CSS3</span>
+                        <span
+                            class="bg-teal-100/50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 text-xs font-medium px-3 py-1 rounded-full border border-teal-200/50 dark:border-teal-800/50">Tailwind
+                            CSS</span>
+                        <span
+                            class="bg-teal-100/50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 text-xs font-medium px-3 py-1 rounded-full border border-teal-200/50 dark:border-teal-800/50">JavaScript</span>
+                    </div>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mt-auto">
+                        An online platform showcasing 100% natural and pure Ethiopian honey. Features a product gallery,
+                        rich storytelling about traditional beekeeping, and a clean user experience designed to drive
+                        engagement.
+                    </p>
+                </a>
+
+                <!-- Project 2 -->
+                <a href="https://yadah-gemstone.vercel.app/" target="_blank"
+                    class="project-card group bg-white dark:bg-slate-900 border border-slate-300/50 dark:border-slate-700/50 rounded-2xl p-5 shadow-lg flex flex-col interactive-glow hover:-translate-y-1 transition-all duration-300 block"
+                    style="transition-delay: 100ms;">
+                    <!-- Image container -->
+                    <div class="rounded-xl overflow-hidden mb-5 bg-slate-100 dark:bg-slate-800 aspect-[16/9] relative">
+                        <div
+                            class="absolute inset-0 bg-brand-900/10 group-hover:bg-transparent transition-colors duration-500 z-10">
+                        </div>
+                        <img src="img2.png" alt="Yadah Gemstone Preview"
+                            class="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700 ease-out">
+                    </div>
+                    <!-- Content -->
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-xl font-bold text-slate-800 dark:text-slate-100 group-hover:text-brand-400 transition-colors">
+                            Yadah Gemstone PLC
+                        </h4>
+                        <div class="text-slate-500 dark:text-slate-400 group-hover:text-brand-600 dark:group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-arrow-up-right-from-square text-lg"></i>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span
+                            class="bg-teal-100/50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 text-xs font-medium px-3 py-1 rounded-full border border-teal-200/50 dark:border-teal-800/50">HTML5</span>
+                        <span
+                            class="bg-teal-100/50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 text-xs font-medium px-3 py-1 rounded-full border border-teal-200/50 dark:border-teal-800/50">CSS3</span>
+                        <span
+                            class="bg-teal-100/50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 text-xs font-medium px-3 py-1 rounded-full border border-teal-200/50 dark:border-teal-800/50">Tailwind
+                            CSS</span>
+                        <span
+                            class="bg-teal-100/50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 text-xs font-medium px-3 py-1 rounded-full border border-teal-200/50 dark:border-teal-800/50">JavaScript</span>
+                    </div>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mt-auto">
+                        A highly professional and modern corporate website for a company driving Ethiopia's economic
+                        growth through sustainable practices across Mining, Agriculture, Construction, and Water Works
+                        sectors.
+                    </p>
+                </a>
+
+                <!-- Project 3 -->
+                <a href="https://hanosengravin.vercel.app/" target="_blank"
+                    class="project-card group bg-white dark:bg-slate-900 border border-slate-300/50 dark:border-slate-700/50 rounded-2xl p-5 shadow-lg flex flex-col interactive-glow hover:-translate-y-1 transition-all duration-300 block"
+                    style="transition-delay: 200ms;">
+                    <!-- Image container -->
+                    <div class="rounded-xl overflow-hidden mb-5 bg-slate-100 dark:bg-slate-800 aspect-[16/9] relative">
+                        <div
+                            class="absolute inset-0 bg-brand-900/10 group-hover:bg-transparent transition-colors duration-500 z-10">
+                        </div>
+                        <img src="img3.png" alt="Hanos Engraving Preview"
+                            class="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700 ease-out">
+                    </div>
+                    <!-- Content -->
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-xl font-bold text-slate-800 dark:text-slate-100 group-hover:text-brand-400 transition-colors">
+                            Hanos Engraving
+                        </h4>
+                        <div class="text-slate-500 dark:text-slate-400 group-hover:text-brand-600 dark:group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-arrow-up-right-from-square text-lg"></i>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span
+                            class="bg-teal-100/50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 text-xs font-medium px-3 py-1 rounded-full border border-teal-200/50 dark:border-teal-800/50">HTML5</span>
+                        <span
+                            class="bg-teal-100/50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 text-xs font-medium px-3 py-1 rounded-full border border-teal-200/50 dark:border-teal-800/50">CSS3</span>
+                        <span
+                            class="bg-teal-100/50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 text-xs font-medium px-3 py-1 rounded-full border border-teal-200/50 dark:border-teal-800/50">Tailwind
+                            CSS</span>
+                        <span
+                            class="bg-teal-100/50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 text-xs font-medium px-3 py-1 rounded-full border border-teal-200/50 dark:border-teal-800/50">JavaScript</span>
+                    </div>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mt-auto">
+                        An elegant storefront presenting authentic Ethiopian handcrafted leather goods, exquisite wood
+                        carvings, and custom engraving services. Designed to preserve cultural heritage dynamically.
+                    </p>
+                </a>
+
+                <!-- Project 4 (Hidden initially) -->
+                <a href="https://gravity-technology.vercel.app/" target="_blank"
+                    class="project-card hidden-project hidden group bg-white dark:bg-slate-900 border border-slate-300/50 dark:border-slate-700/50 rounded-2xl p-5 shadow-lg flex flex-col interactive-glow hover:-translate-y-1 transition-all duration-300 block">
+                    <!-- Image container -->
+                    <div class="rounded-xl overflow-hidden mb-5 bg-slate-100 dark:bg-slate-800 aspect-[16/9] relative">
+                        <div
+                            class="absolute inset-0 bg-brand-900/10 group-hover:bg-transparent transition-colors duration-500 z-10">
+                        </div>
+                        <img src="img4.png" alt="Gravity Technology Preview"
+                            class="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700 ease-out">
+                    </div>
+                    <!-- Content -->
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-xl font-bold text-slate-800 dark:text-slate-100 group-hover:text-brand-400 transition-colors">
+                            Gravity Technology
+                        </h4>
+                        <div class="text-slate-500 dark:text-slate-400 group-hover:text-brand-600 dark:group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-arrow-up-right-from-square text-lg"></i>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span
+                            class="bg-teal-100/50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 text-xs font-medium px-3 py-1 rounded-full border border-teal-200/50 dark:border-teal-800/50">HTML5</span>
+                        <span
+                            class="bg-teal-100/50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 text-xs font-medium px-3 py-1 rounded-full border border-teal-200/50 dark:border-teal-800/50">CSS3</span>
+                        <span
+                            class="bg-teal-100/50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 text-xs font-medium px-3 py-1 rounded-full border border-teal-200/50 dark:border-teal-800/50">Tailwind
+                            CSS</span>
+                        <span
+                            class="bg-teal-100/50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 text-xs font-medium px-3 py-1 rounded-full border border-teal-200/50 dark:border-teal-800/50">JavaScript</span>
+                    </div>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mt-auto">
+                        A crisp professional tech consulting website offering services in software development,
+                        networking, and website hosting. Tailored interface for smarter future innovations.
+                    </p>
+                </a>
+
+                <!-- Project 5 (Hidden initially) -->
+                <a href="https://theboykinz.onrender.com/" target="_blank"
+                    class="project-card hidden-project hidden group bg-white dark:bg-slate-900 border border-slate-300/50 dark:border-slate-700/50 rounded-2xl p-5 shadow-lg flex flex-col interactive-glow hover:-translate-y-1 transition-all duration-300 block">
+                    <!-- Image container -->
+                    <div class="rounded-xl overflow-hidden mb-5 bg-slate-100 dark:bg-slate-800 aspect-[16/9] relative">
+                        <div
+                            class="absolute inset-0 bg-brand-900/10 group-hover:bg-transparent transition-colors duration-500 z-10">
+                        </div>
+                        <img src="img5.png" alt="The BoykinZ Preview"
+                            class="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700 ease-out">
+                    </div>
+                    <!-- Content -->
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-xl font-bold text-slate-800 dark:text-slate-100 group-hover:text-brand-400 transition-colors">
+                            The BoykinZ
+                        </h4>
+                        <div class="text-slate-500 dark:text-slate-400 group-hover:text-brand-600 dark:group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-arrow-up-right-from-square text-lg"></i>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span
+                            class="bg-teal-100/50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 text-xs font-medium px-3 py-1 rounded-full border border-teal-200/50 dark:border-teal-800/50">HTML5</span>
+                        <span
+                            class="bg-teal-100/50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 text-xs font-medium px-3 py-1 rounded-full border border-teal-200/50 dark:border-teal-800/50">CSS3</span>
+                        <span
+                            class="bg-teal-100/50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 text-xs font-medium px-3 py-1 rounded-full border border-teal-200/50 dark:border-teal-800/50">Tailwind
+                            CSS</span>
+                        <span
+                            class="bg-teal-100/50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 text-xs font-medium px-3 py-1 rounded-full border border-teal-200/50 dark:border-teal-800/50">JavaScript</span>
+                    </div>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mt-auto">
+                        A highly immersive artistic platform designed for a music group, featuring integrated "Listen
+                        Now" links for their recent tracks, tour scheduling, and an interconnected merchandise
+                        storefront.
+                    </p>
+                </a>
+
+            </div>
+
+            <!-- View More Button -->
+            <div class="mt-12 text-center fade-up">
+                <button id="view-more-btn"
+                    class="px-8 py-3 bg-transparent border border-brand-500 text-brand-500 font-medium rounded-lg hover:bg-brand-500 hover:text-brand-600 dark:hover:text-white transition-all duration-300">
+                    View More Projects
+                </button>
+            </div>
+
+
+        </section>
+
+        <!-- 5 & 6. Experience & Education Section Combined -->
+        <section id="experience" class="scroll-mt-24 grid md:grid-cols-2 gap-16">
+
+            <!-- Experience Timeline -->
+            <div class="fade-up">
+                <div class="flex items-center gap-4 mb-10">
+                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white"><span
+                            class="text-brand-500 font-mono text-lg mr-2">04.</span>Experience</h3>
+                </div>
+
+                <div class="relative pl-8 border-l border-slate-200 dark:border-slate-800 timeline-container">
+                    <!-- Timeline Animated Line Overlay -->
+                    <div id="timeline-line"
+                        class="absolute left-[-1px] top-0 bottom-0 w-[2px] bg-brand-500 origin-top transform scale-y-0 transition-transform duration-700 ease-out z-10 hidden">
+                    </div>
+
+                    <div class="mb-10 relative">
+                        <!-- Dot -->
+                        <div
+                            class="absolute -left-[41px] top-1.5 w-[18px] h-[18px] bg-white dark:bg-darkbase border-[3px] border-brand-500 rounded-full z-20 shadow-[0_0_10px_rgba(59,130,246,0.5)]">
+                        </div>
+                        <div class="text-brand-600 dark:text-brand-400 font-mono text-sm mb-1">2025</div>
+                        <h4 class="text-lg font-bold text-slate-900 dark:text-white mb-2">CRM Application Developer</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">Built modern dashboards with React, Tailwind, and Supabase
+                            integration.</p>
+                    </div>
+
+                    <div class="mb-10 relative">
+                        <div
+                            class="absolute -left-[41px] top-1.5 w-[18px] h-[18px] bg-white dark:bg-darkbase border-[3px] border-purple-500 rounded-full z-20">
+                        </div>
+                        <div class="text-purple-400 font-mono text-sm mb-1">2025</div>
+                        <h4 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Automation Engineer</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">Developed a Telegram bot for automated data scraping using
+                            Python, deployed on Render with AWS S3 integration.</p>
+                    </div>
+
+                    <div class="relative">
+                        <div
+                            class="absolute -left-[41px] top-1.5 w-[18px] h-[18px] bg-white dark:bg-darkbase border-[3px] border-pink-500 rounded-full z-20">
+                        </div>
+                        <div class="text-pink-400 font-mono text-sm mb-1">2025</div>
+                        <h4 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Flutter Developer</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">Constructed AI-driven mobile app designs with Firebase and
+                            real-time updates.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Education -->
+            <div class="fade-up" style="transition-delay: 200ms;">
+                <div class="flex items-center gap-4 mb-10">
+                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white"><span
+                            class="text-brand-500 font-mono text-lg mr-2">05.</span>Education</h3>
+                </div>
+
+                <div
+                    class="glass-container p-8 rounded-xl border border-slate-200/60 dark:border-slate-800/60 shadow-lg relative overflow-hidden group">
+                    <div
+                        class="absolute -right-4 -top-4 text-slate-800/30 group-hover:text-slate-800/50 transition-colors duration-500 z-0">
+                        <i class="fa-solid fa-graduation-cap text-9xl transform -rotate-12"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-3 text-brand-600 dark:text-brand-400 mb-4">
+                            <i class="fa-solid fa-graduation-cap text-2xl"></i>
+                            <span class="font-mono text-sm">Graduated Jan 2026</span>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2 leading-tight">Bachelor of Science in <br>Computer
+                            Science</h4>
+                        <p class="text-slate-500 dark:text-slate-400 font-medium">St. Mary's University</p>
+                        <p class="text-slate-500 text-sm mt-1 mb-6"><i class="fa-solid fa-location-dot mr-1"></i> Addis
+                            Ababa, Ethiopia</p>
+                        <div
+                            class="text-xs font-mono text-brand-500 bg-brand-900/20 inline-block px-3 py-1.5 rounded border border-brand-900/50">
+                            Status: Completed
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- 7. Contact Section -->
+        <section id="contact" class="scroll-mt-24 mb-20 fade-up text-center max-w-2xl mx-auto">
+            <h3 class="text-brand-500 font-mono mb-4 text-center">06. What's Next?</h3>
+            <h2 class="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">Get In Touch</h2>
+            <p class="text-slate-500 dark:text-slate-400 mb-10 leading-relaxed text-lg">
+                I'm currently looking for new opportunities. Whether you have a question, a project idea, or just want
+                to say hi, my inbox is always open.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-4 text-left max-w-md mx-auto mb-10">
+                <div
+                    class="flex items-center gap-4 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-lg border border-slate-200 dark:border-slate-800 group hover:border-brand-500/50 transition-colors">
+                    <div
+                        class="w-10 h-10 rounded-full bg-brand-100 dark:bg-brand-900/50 flex items-center justify-center text-brand-600 dark:text-brand-400 group-hover:bg-brand-500 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Email</div>
+                        <a href="mailto:bikatvon@gmail.com"
+                            class="text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-brand-600 dark:hover:text-brand-400 transition-colors">bikatvon@gmail.com</a>
+                    </div>
+                </div>
+                <div
+                    class="flex items-center gap-4 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-lg border border-slate-200 dark:border-slate-800 group hover:border-green-500/50 transition-colors">
+                    <div
+                        class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/50 flex items-center justify-center text-green-600 dark:text-green-400 group-hover:bg-green-500 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Phone</div>
+                        <a href="tel:+251969485212"
+                            class="text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-green-600 dark:hover:text-green-400 transition-colors">+251 969
+                            485 212</a>
+                    </div>
+                </div>
+            </div>
+
+            <a href="mailto:bikatvon@gmail.com"
+                class="inline-block px-8 py-4 bg-transparent border-2 border-brand-500 text-brand-500 font-medium rounded text-lg hover:bg-brand-500/10 transition-colors">
+                Say Hello
+            </a>
+
+            <!-- Social Links Bottom -->
+            <div class="flex justify-center gap-6 mt-20 fade-up" style="transition-delay: 200ms;">
+                <a href="https://github.com/bikat-t" target="_blank"
+                class="text-slate-500 hover:text-brand-600 dark:hover:text-white transition-colors">
+                <i class="fa-brands fa-github text-2xl"></i>
+            </a>    <a href="https://www.linkedin.com/in/bikat-tilahun/" target="_blank" class="text-slate-500 hover:text-brand-600 dark:hover:text-white transition-colors"><i
+                        class="fa-brands fa-linkedin text-2xl"></i></a>
+                <a href="https://t.me/btd3v" target="_blank"
+                class="text-slate-500 hover:text-brand-600 dark:hover:text-white transition-colors">
+                <i class="fa-brands fa-telegram text-2xl"></i>
+            </a></div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200/50 dark:border-slate-800/50 py-6 text-center text-sm text-slate-500 font-mono">
+        <p>Built by Bikat Tilahun &copy; 2026</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
