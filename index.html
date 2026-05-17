@@ -89,6 +89,18 @@
                 <i class="fa-solid fa-bars" id="mobile-menu-icon"></i>
             </button>
         </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[#FFFFE3] border-t border-[#CBCBCB] absolute w-full left-0 top-full shadow-lg">
+            <nav class="flex flex-col font-poppins text-[15px] font-semibold text-[#4A4A4A] p-6 gap-6">
+                <a href="#" class="mobile-link hover:text-[#6D8196] transition-colors">Home</a>
+                <a href="#about" class="mobile-link hover:text-[#6D8196] transition-colors">About</a>
+                <a href="#skills" class="mobile-link hover:text-[#6D8196] transition-colors">Arsenal</a>
+                <a href="#projects" class="mobile-link hover:text-[#6D8196] transition-colors">Selected Works</a>
+                <a href="#certificates" class="mobile-link hover:text-[#6D8196] transition-colors">Certificates</a>
+                <a href="#contact" class="mobile-link w-fit bg-[#6D8196] text-[#FFFFE3] text-[13px] font-semibold uppercase px-6 py-2.5 rounded hover:bg-[#4A4A4A] transition-colors">CONTACT</a>
+            </nav>
+        </div>
     </header>
 
     <!-- Main Content -->
@@ -100,22 +112,22 @@
 
                 <!-- Left Column -->
                 <div class="w-full md:w-1/2 flex flex-col justify-center items-start lg:mt-12 lg:pl-16">
-                    <h1 class="text-[46px] lg:text-[56px] xl:text-[64px] leading-[1.1] mb-6 tracking-tight">
-                        <span class="whitespace-nowrap"><span class="text-[#4A4A4A] font-medium">Full-Stack</span> <span
+                    <h1 class="text-[38px] md:text-[46px] lg:text-[56px] xl:text-[64px] leading-[1.1] mb-6 tracking-tight">
+                        <span class="md:whitespace-nowrap"><span class="text-[#4A4A4A] font-medium">Full-Stack</span> <span
                                 class="text-[#6D8196] font-bold">Software</span></span><br>
                         <span class="text-[#6D8196] font-bold">Developer.</span>
                     </h1>
-                    <p class="text-[16px] text-[#6D8196] leading-[1.6] max-w-[85%] mb-10 font-medium">
+                    <p class="text-[15px] md:text-[16px] text-[#6D8196] leading-[1.6] max-w-full md:max-w-[85%] mb-8 md:mb-10 font-medium">
                         Engineering sophisticated, scalable web architectures. Bridging the gap between complex backend
                         systems and immaculate user interfaces.
                     </p>
-                    <div class="flex gap-4">
+                    <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
                         <a href="#contact"
-                            class="bg-[#6D8196] text-[#FFFFE3] text-[14px] font-semibold px-8 py-[14px] rounded hover:bg-[#4A4A4A] transition-colors">
+                            class="bg-[#6D8196] text-[#FFFFE3] text-[14px] font-semibold px-8 py-[14px] rounded hover:bg-[#4A4A4A] transition-colors text-center w-full sm:w-auto">
                             CONTACT NOW
                         </a>
                         <a href="#about"
-                            class="bg-transparent text-[#6D8196] border border-[#6D8196] text-[14px] font-semibold px-8 py-[14px] rounded hover:bg-[#CBCBCB] transition-colors">
+                            class="bg-transparent text-[#6D8196] border border-[#6D8196] text-[14px] font-semibold px-8 py-[14px] rounded hover:bg-[#CBCBCB] transition-colors text-center w-full sm:w-auto">
                             LEARN MORE
                         </a>
                     </div>
@@ -123,21 +135,21 @@
 
                 <!-- Right Column -->
                 <div
-                    class="w-full md:w-1/2 relative flex justify-center items-end min-h-[600px] overflow-hidden mt-[-90px] group">
+                    class="w-full md:w-1/2 relative flex justify-center items-end min-h-[350px] sm:min-h-[450px] md:min-h-[600px] overflow-hidden mt-10 md:mt-[-90px] group">
                     <!-- Circles -->
                     <div
-                        class="absolute w-[600px] h-[600px] bg-[#CBCBCB] rounded-full z-[-1] top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 transition-transform duration-[900ms] ease-in-out group-hover:scale-[1.12]">
+                        class="absolute w-[300px] h-[300px] sm:w-[450px] sm:h-[450px] md:w-[600px] md:h-[600px] bg-[#CBCBCB] rounded-full z-[-1] top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 transition-transform duration-[900ms] ease-in-out group-hover:scale-[1.12]">
                     </div>
                     <div
-                        class="absolute w-[450px] h-[450px] bg-[#CBCBCB] rounded-full z-[0] top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 transition-transform duration-[700ms] ease-in-out group-hover:scale-[1.14]">
+                        class="absolute w-[220px] h-[220px] sm:w-[330px] sm:h-[330px] md:w-[450px] md:h-[450px] bg-[#CBCBCB] rounded-full z-[0] top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 transition-transform duration-[700ms] ease-in-out group-hover:scale-[1.14]">
                     </div>
                     <div
-                        class="absolute w-[300px] h-[300px] bg-[#CBCBCB] rounded-full z-[1] top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 transition-transform duration-[500ms] ease-in-out group-hover:scale-[1.18]">
+                        class="absolute w-[150px] h-[150px] sm:w-[220px] sm:h-[220px] md:w-[300px] md:h-[300px] bg-[#CBCBCB] rounded-full z-[1] top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 transition-transform duration-[500ms] ease-in-out group-hover:scale-[1.18]">
                     </div>
 
                     <!-- Subject Image -->
                     <img src="photo_2026-03-14_08-12-11-removebg-preview.png" alt="Subject"
-                        class="relative z-10 w-[90%] max-w-[500px] h-auto object-contain object-bottom">
+                        class="relative z-10 w-[80%] md:w-[90%] max-w-[500px] h-auto object-contain object-bottom">
                 </div>
 
             </div>
