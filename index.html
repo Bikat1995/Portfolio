@@ -627,7 +627,7 @@
 
                 <!-- Right: Form -->
                 <div class="bg-[#CBCBCB] p-10 rounded-xl shadow-[0_4px_20px_-4px_rgba(109,129,150,0.15)] border border-[#CBCBCB]">
-                    <form action="https://formsubmit.co/bikattilahunassefa@gmail.com" method="POST" class="space-y-6">
+                    <form id="contact-form" action="https://formsubmit.co/bikattilahunassefa@gmail.com" method="POST" class="space-y-6">
                         <div>
                             <label for="name" class="block text-[13px] font-medium text-[#4A4A4A] mb-2">Name</label>
                             <input type="text" id="name" name="name" required class="w-full bg-[#FFFFE3] border border-[#CBCBCB] text-[#4A4A4A] text-[14px] px-4 py-3 rounded focus:outline-none focus:border-[#6D8196] focus:ring-1 focus:ring-[#6D8196] transition-all placeholder:text-[#6D8196]" placeholder="John Doe">
@@ -641,10 +641,16 @@
                             <textarea id="message" name="message" required rows="4" class="w-full bg-[#FFFFE3] border border-[#CBCBCB] text-[#4A4A4A] text-[14px] px-4 py-3 rounded focus:outline-none focus:border-[#6D8196] focus:ring-1 focus:ring-[#6D8196] transition-all resize-none placeholder:text-[#6D8196]" placeholder="How can I help you?"></textarea>
                         </div>
                         <input type="hidden" name="_captcha" value="false">
-                        <button type="submit" class="w-full bg-[#6D8196] text-[#FFFFE3] text-[14px] font-semibold uppercase px-8 py-4 rounded hover:bg-[#4A4A4A] transition-colors mt-2">
+                        <button type="submit" id="contact-submit-btn" class="w-full bg-[#6D8196] text-[#FFFFE3] text-[14px] font-semibold uppercase px-8 py-4 rounded hover:bg-[#4A4A4A] transition-colors mt-2">
                             Submit Inquiry
                         </button>
                     </form>
+                    <!-- Success Message (hidden by default) -->
+                    <div id="form-success" class="hidden text-center py-10">
+                        <i class="fa-solid fa-circle-check text-[48px] text-[#6D8196] mb-4"></i>
+                        <h3 class="text-[20px] font-bold text-[#4A4A4A] mb-2">Message Sent!</h3>
+                        <p class="text-[14px] text-[#6D8196] leading-relaxed">Thank you for reaching out. I'll get back to you soon.</p>
+                    </div>
                 </div>
 
             </div>

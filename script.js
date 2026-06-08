@@ -156,4 +156,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
     skillBars.forEach(bar => barObserver.observe(bar));
 
+    // --- Contact Form AJAX Submission ---
+    const contactForm = document.getElementById('contact-form');
+    const formSuccess = document.getElementById('form-success');
+    const submitBtn = document.getElementById('contact-submit-btn');
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Disable button & show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+
+            const formData = new FormData(contactForm);
+
+            fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(response => {
+                // Hide the form, show success message
+                contactForm.classList.add('hidden');
+                formSuccess.classList.remove('hidden');
+
+                // After 4 seconds, reset everything back
+                setTimeout(() => {
+                    contactForm.reset();
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Submit Inquiry';
+                    formSuccess.classList.add('hidden');
+                    contactForm.classList.remove('hidden');
+                }, 4000);
+            })
+            .catch(error => {
+                // On error, re-enable the button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Inquiry';
+                alert('Something went wrong. Please try again.');
+            });
+        });
+    }
+
 });
